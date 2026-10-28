@@ -1,0 +1,18 @@
+# Configuration of the layout and test-style lints
+# (https://github.com/pengwin/rust_dylints, README: Configuration).
+[rust_layout]
+# Longest source file in lines (500 by default); `max_file_lines_by_dir = { data = 200 }` is stricter below a directory.
+# max_file_lines = 500
+# File names that are never allowed; split by concept instead.
+forbidden_file_names = ["utils.rs", "helpers.rs", "common.rs", "misc.rs"]
+# Workspace crates a package may depend on; empty switches `layout_crate_dependency` off.
+# contract_crates = []
+# Packages which compose others (an application) and may depend on any workspace crate.
+# composition_crates = []
+# mod.rs and lib.rs need a //! comment of at least min_doc_words words saying what the module owns.
+min_doc_words = 3
+# Generated code is skipped by glob: `**/generated/**` and `**/*generated.rs` by default.
+# ignored_paths = ["**/target/**", "**/generated/**", "**/*generated.rs"]
+
+[rust_testing]
+# Tests use #[rstest] and #[fixture]; see AGENTS.md.

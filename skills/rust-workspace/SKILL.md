@@ -35,14 +35,26 @@ Applications belong in apps/, libraries in crates/, tools in tools/. Add member
 globs only once packages exist. Keep business logic out of main.rs/lib.rs/mod.rs,
 allowing minimal entry-point delegation. Do not copy Bevy or game-specific settings.
 
+## Lints
+
+`just lint` runs Clippy and then `just lint-arch`: the Dylint libraries `rust_layout` (flat crate
+root, declaration-only `mod.rs`/`lib.rs`, `//!` module docs, file size, plain `pub`) and
+`rust_testing` (rstest style) from https://github.com/pengwin/rust_dylints, pinned by git tag in
+`[workspace.metadata.dylint]`. `bevy_layout` is deliberately not included; it belongs to the
+`bevy-workspace` skill. The starter is laid out to pass them (`src/app/mod.rs` with `run.rs` and
+`run_tests.rs`, not a lone `src/app.rs`); keep new code in that shape. Thresholds are in
+`dylint.toml`. `cargo-dylint`/`dylint-link` >= 6 must be installed (do not install them silently:
+tell the user); the first `just lint-arch` makes rustup install the nightly pinned in that
+repository, and the workspace `rust-version` must not exceed it.
+
 README must retain installation instructions for Rust, rustfmt, Clippy, just,
-cargo-nextest, RTK, Bash and the native linker/toolchain. Add the new application's
+cargo-nextest, cargo-dylint with dylint-link (>= 6), RTK, Bash and the native linker/toolchain. Add the new application's
 actual system/runtime dependencies. LICENSE is a clearly labeled proprietary
 placeholder; adapt it if the user specifies a license.
 
 Run `just fmt`, `just build`, `just lint`, `just test` and `just run` from the
 new workspace; use `just test-doc` for libraries with doctests. Use Justfile
-rather than direct Cargo build/test/lint commands. The starter includes a `mod tests` bootstrap smoke test;
+rather than direct Cargo build/test/lint commands. The starter includes an rstest bootstrap smoke test (`app/run_tests.rs`);
 nextest allows other empty suites with a warning. Keep Cargo.lock available for
 version control, but do not initialize Git unless separately requested.
 

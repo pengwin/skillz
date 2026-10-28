@@ -9,9 +9,15 @@
       "name": "skillz",
       "source": "./",
       "description": "Skills that start Rust and Bevy workspaces with strict Clippy lints, Justfile, nextest and enforced architecture rules (Dylint).",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "license": "MIT",
-      "keywords": ["rust", "bevy", "workspace", "clippy", "dylint"]
+      "keywords": [
+        "rust",
+        "bevy",
+        "workspace",
+        "clippy",
+        "dylint"
+      ]
     }
   ]
 }

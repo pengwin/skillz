@@ -11,13 +11,17 @@ __DESCRIPTION__
 - RTK: `cargo install --git https://github.com/rtk-ai/rtk --locked`
   (requires Git for installation), or `brew install rtk` on macOS.
   Official installation instructions: https://github.com/rtk-ai/rtk#installation.
+- cargo-dylint and dylint-link (>= 6) for the layout and test-style lints:
+  `cargo install cargo-dylint dylint-link --locked`. The first `just lint-arch`
+  makes rustup install the nightly pinned in the rust_dylints repository (with the `rustc-dev`
+  and `llvm-tools-preview` components) and builds the lint libraries.
 - Bash, used by Justfile recipes. On Windows use an environment with Bash
   and make Rust, just, nextest and RTK available in that same environment.
 - A native linker/C toolchain appropriate for the target: Linux C compiler
   and linker (for example build-essential on Debian/Ubuntu), macOS Xcode
   Command Line Tools, or Windows MSVC Build Tools with the Windows SDK.
 
-The starter has no third-party Rust dependencies or runtime system libraries.
+The starter has no third-party runtime dependencies (rstest is a dev dependency) or system libraries.
 Document any added native libraries, external services or tools here, including
 optional dependencies and the commands which require them.
 Python 3 is needed only to use the workspace generator, not to build this project.
@@ -30,6 +34,7 @@ Install Rust/Cargo using https://rustup.rs, then:
 rustup component add rustfmt clippy
 cargo install just --locked
 cargo install cargo-nextest --locked
+cargo install cargo-dylint dylint-link --locked
 cargo install --git https://github.com/rtk-ai/rtk --locked
 export PATH="$HOME/.cargo/bin:$PATH"
 ```
@@ -50,6 +55,7 @@ cargo fmt --version
 cargo clippy --version
 just --version
 cargo nextest --version
+cargo dylint --version
 rtk --version
 ```
 
@@ -63,7 +69,8 @@ just fmt
 just fmt-check
 just build                 # whole workspace, release
 just build __NAME__        # one package
-just lint                  # Clippy, all targets and features
+just lint                  # Clippy, all targets and features, then lint-arch
+just lint-arch             # only the Dylint layout and test-style lints
 just test                  # nextest, release
 just test-doc              # documentation tests, separately
 just run                   # default application, release
@@ -92,6 +99,6 @@ add `[lints] workspace = true`, and inherit shared dependencies explicitly.
 The starter uses a proprietary, all-rights-reserved LICENSE placeholder.
 Choose and replace LICENSE before distributing the project under another license.
 
-The starter includes a `#[cfg(test)] mod tests` in the application bootstrap,
-with a smoke test verifying that startup completes without panicking.
+The starter includes `app/run_tests.rs`, an rstest smoke test verifying that startup completes
+without panicking.
 Add tests of real application behavior as the implementation grows.

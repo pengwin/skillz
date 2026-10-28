@@ -22,6 +22,19 @@ lint package="":
     selection=(--workspace)
     if [[ -n "$1" ]]; then selection=(-p "$1"); fi
     rtk cargo clippy "${selection[@]}" --all-features --all-targets
+    if [[ -z "$1" ]]; then
+        just lint-arch
+    fi
+
+# Dylint layout and test-style lints (rust_dylints repository); see AGENTS.md.
+lint-arch *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    command -v cargo-dylint >/dev/null || { echo 'Install: cargo install cargo-dylint dylint-link --locked' >&2; exit 1; }
+    major="$(cargo dylint --version | awk '{print $2}' | cut -d. -f1)"
+    (( major >= 6 )) || { echo 'cargo-dylint >= 6 is required: cargo install cargo-dylint dylint-link --locked' >&2; exit 1; }
+    # Dylint lints warn by default; -D warnings makes a violation fail the recipe.
+    RUSTFLAGS="${RUSTFLAGS:-} -D warnings" cargo dylint --all --workspace -- --all-targets --all-features "$@"
 
 test package="":
     #!/usr/bin/env bash

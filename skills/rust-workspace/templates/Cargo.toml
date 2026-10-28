@@ -3,6 +3,12 @@ resolver = "3"
 members = ["apps/*"] # Add crates/* and tools/* when their first package exists.
 exclude = ["docs"]
 
+# Layout and test-style lints, built by `just lint-arch` with the nightly pinned in that repository.
+[workspace.metadata.dylint]
+libraries = [
+    { git = "https://github.com/pengwin/rust_dylints", tag = "v0.0.1", pattern = ["lints/rust_layout", "lints/rust_testing"] },
+]
+
 [workspace.lints.rust]
 missing_docs = "warn"
 unsafe_code = "forbid"
@@ -32,3 +38,4 @@ repository = __REPOSITORY_TOML__
 
 [workspace.dependencies]
 # Declare shared dependencies here; inherit with dependency.workspace = true.
+rstest = "0.26"
