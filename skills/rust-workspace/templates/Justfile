@@ -1,0 +1,46 @@
+set positional-arguments
+
+default:
+    @just --list
+
+fmt:
+    cargo fmt --all
+
+fmt-check:
+    cargo fmt --all -- --check
+
+build package="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    selection=(--workspace)
+    if [[ -n "$1" ]]; then selection=(-p "$1"); fi
+    rtk cargo build "${selection[@]}" --release
+
+lint package="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    selection=(--workspace)
+    if [[ -n "$1" ]]; then selection=(-p "$1"); fi
+    rtk cargo clippy "${selection[@]}" --all-features --all-targets
+
+test package="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    selection=(--workspace)
+    if [[ -n "$1" ]]; then selection=(-p "$1"); fi
+    rtk cargo nextest run "${selection[@]}" --release --no-tests warn
+
+# nextest does not execute documentation tests.
+test-doc package="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    selection=(--workspace)
+    if [[ -n "$1" ]]; then selection=(-p "$1"); fi
+    rtk cargo test "${selection[@]}" --doc --release
+
+run package="__NAME__" *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    package="$1"
+    shift
+    rtk cargo run -p "$package" --release -- "$@"

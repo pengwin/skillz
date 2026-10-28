@@ -1,0 +1,13 @@
+{
+  "name": "skillz",
+  "version": "0.0.1",
+  "description": "Skills that start Rust and Bevy workspaces with strict Clippy lints, Justfile, nextest and enforced architecture rules (Dylint).",
+  "author": {
+    "name": "Ivan Kruchkov",
+    "url": "https://github.com/pengwin"
+  },
+  "homepage": "https://github.com/pengwin/skillz",
+  "repository": "https://github.com/pengwin/skillz",
+  "license": "MIT",
+  "keywords": ["rust", "bevy", "workspace", "clippy", "dylint"]
+}

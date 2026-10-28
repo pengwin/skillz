@@ -1,0 +1,23 @@
+[package]
+name = "game-spin"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+publish.workspace = true
+license-file.workspace = true
+repository.workspace = true
+readme = "../../README.md"
+description = "Example leaf feature: spinning entities."
+keywords = ["bevy", "gamedev"]
+categories = ["game-development"]
+
+[dependencies]
+bevy.workspace = true
+game-core.workspace = true
+
+[dev-dependencies]
+rstest.workspace = true
+
+[lints]
+workspace = true

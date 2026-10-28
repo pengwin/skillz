@@ -1,0 +1,25 @@
+# Configuration of the architecture lints (see docs/BEVY_ARCHITECTURE.md and
+# https://github.com/pengwin/rust_dylints).
+[rust_layout]
+exempt_packages = ["__NAME__"]
+forbidden_file_names = ["components.rs", "systems.rs", "data.rs", "input.rs", "simulation.rs", "presentation.rs"]
+# Feature crates may depend on these workspace crates but never on each other.
+contract_crates = ["game-core"]
+max_file_lines = 300
+max_file_lines_by_dir = { data = 200 }
+# The crate root holds lib.rs/main.rs and module directories; a feature crate root also has plugin.rs.
+allowed_root_files = ["plugin.rs"]
+# mod.rs, lib.rs and plugin.rs need a //! comment of at least min_doc_words words.
+min_doc_words = 3
+
+[rust_testing]
+# Tests use #[rstest] and #[fixture]; see docs/BEVY_ARCHITECTURE.md.
+
+[bevy_layout]
+# Packages which are not Bevy feature crates: application bootstraps, tools, generated code,
+# and contract crates (they define shared SystemSets and Messages at their root).
+exempt_packages = ["__NAME__", "game-core"]
+# max_data_modules = 8
+# max_registered_systems = 6
+# max_resource_writes = 1               # ResMut-style parameters per system
+# max_mutable_component_access = 2     # &mut T / Mut<T> in query data per system

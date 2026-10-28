@@ -1,0 +1,34 @@
+[workspace]
+resolver = "3"
+members = ["apps/*"] # Add crates/* and tools/* when their first package exists.
+exclude = ["docs"]
+
+[workspace.lints.rust]
+missing_docs = "warn"
+unsafe_code = "forbid"
+
+rust_2018_idioms = { level = "deny", priority = -1 } # set priority to not interfere with unsafe_code
+rust_2024_compatibility = { level = "deny", priority = -1 }
+
+[workspace.lints.clippy]
+cargo = { level = "deny", priority = -1 }
+all = "deny"
+pedantic = "deny"
+nursery = "deny"
+multiple_crate_versions = { level = "allow", priority = 1 }
+unwrap_used = "deny"
+expect_used = "deny"
+print_stdout = "deny"
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.98.1"
+authors = ["Ivan Kruchkov <820839+pengwin@users.noreply.github.com>"]
+publish = false
+license-file = "LICENSE"
+repository = __REPOSITORY_TOML__
+
+
+[workspace.dependencies]
+# Declare shared dependencies here; inherit with dependency.workspace = true.

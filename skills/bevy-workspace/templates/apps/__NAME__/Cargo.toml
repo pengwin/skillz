@@ -1,0 +1,24 @@
+[package]
+name = __NAME_TOML__
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+publish.workspace = true
+license-file.workspace = true
+repository.workspace = true
+readme = "../../README.md"
+description = __DESCRIPTION_TOML__
+keywords = ["bevy", "gamedev"]
+categories = ["game-development"]
+
+[dependencies]
+bevy.workspace = true
+game-core.workspace = true
+game-spin.workspace = true
+
+[dev-dependencies]
+rstest.workspace = true
+
+[lints]
+workspace = true
